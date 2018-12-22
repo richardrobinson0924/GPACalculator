@@ -1,10 +1,11 @@
 package gpacalculator.eecs;
 
 import java.util.*;
+import java.util.regex.Pattern;
 
 /**
  * Copyright (c) 2018 Richard Robinson. All rights reserved.
- * @see <a href="https://github.com/richardrobinson0924/GPACalculator">https://github.com/richardrobinson0924/GPACalculator</a>
+ * @see "https://github.com/richardrobinson0924/GPACalculator"
  */
 public class Course implements Comparable<Course> {
 
@@ -16,16 +17,20 @@ public class Course implements Comparable<Course> {
 	private double grade;
 
 	/**
-	 * A regex pattern for use with scanners of the default input string with format:
+	 * A regex pattern for use with scanners of the default input string for extracting the
+	 * course code and number of credits with format:
 	 * <p>
-	 * {@code FW99 \t LE EECS 1234 3.00 E \t Java Language \t A+}
+	 * {@code ... \t LE EECS 1234 3.00 E \t ...}
 	 * </p>
-	 * in which "LE EECS 2021" is the course name, "4" is the number of credits, and "B+" is the
-	 * (optional) grade
+	 * in which "EECS 2021" is the course name (capture group 1), and "3" is the number of credits
+	 * (group 2).
+	 *
+	 * Note, the remaining values of the entire default string are otherwise tab-delimted.
 	 *
 	 * @see java.util.regex.Pattern
 	 */
-	public static final String PATTERN = ".*\\t([\\D]*\\d{4})\\s*(\\d).*\\t(\\w?\\+?)";
+	public static final Pattern p = Pattern.compile(Course.REGEX);
+	private static final String REGEX = "\\w{2} (\\w{3,4} {1,2}\\d{4}) {2}(\\d).00 \\w";
 
 	/**
 	 * The constructor if the number of credits is not provided. In this case, the default number
@@ -150,15 +155,16 @@ public class Course implements Comparable<Course> {
 	 *                                   other two
 	 * @see #compareTo(Course) the compareTo() method used to sort the list of Courses
 	 */
-	public static <T> List<Course> makeList(String[] names, T[] beforeGrades, int[] credits) {
-		if (names.length != beforeGrades.length || names.length != credits.length) {
+	public static <T> List<Course> makeList(List<String> names, List<T> beforeGrades,
+	                                        List<Integer> credits) {
+		if (names.size() != beforeGrades.size() || names.size() != credits.size()) {
 			throw new IndexOutOfBoundsException("One of the params has a different length");
 		}
 
 		List<Course> list = new ArrayList<>();
 
-		for (int i = 0; i < names.length; i++) {
-			Course course = new Course(names[i], beforeGrades[i], credits[i]);
+		for (int i = 0; i < names.size(); i++) {
+			Course course = new Course(names.get(i), beforeGrades.get(i), credits.get(i));
 			list.add(course);
 		}
 

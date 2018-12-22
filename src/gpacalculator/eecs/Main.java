@@ -1,18 +1,39 @@
 package gpacalculator.eecs;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.io.*;;
+import java.util.*;
+import java.util.regex.*;
 
 
 public class Main {
 
-    public static void main(String[] args) {
-        String[] names = {"EECS", "PHYS", "MATH"};
-        Double[] grades = {80.1, 75.1, 90.5};
-        int[] credits = {3, 3, 4};
+    public static void main(String[] args) throws Exception {
+        List<String> names    = new ArrayList<>();
+        List<String> grades  = new ArrayList<>();
+        List<Integer> credits = new ArrayList<>();
 
+        String path = "/Users/richardrobinson/Documents/GPACalculator/test.txt";
+        Scanner sc = new Scanner(new File(path));
+
+        Pattern p = Pattern.compile(Course.REGEX);
+
+        while (sc.hasNextLine()) {
+            String[] s = sc.nextLine().split("\t");
+            if (s.length == 4) {
+                Matcher m = p.matcher(s[1]);
+                if (m.find()) {
+                    names.add(m.group(1));
+                    credits.add(Integer.parseInt(m.group(2)));
+                }
+                grades.add(s[3]);
+            }
+        }
+
+        System.out.println(names);
+        System.out.println(grades);
+        System.out.println(credits);
         List<Course> courses = Course.makeList(names, grades, credits);
+        courses.add(new Course("EECS 2200", 75.0, 3));
 
         double sum = 0;
         int totalCredits = 0;
