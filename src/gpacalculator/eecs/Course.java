@@ -5,13 +5,11 @@ import java.util.regex.Pattern;
 
 /**
  * Copyright (c) 2018 Richard Robinson. All rights reserved.
+ *
  * @see "https://github.com/richardrobinson0924/GPACalculator"
  */
 public class Course implements Comparable<Course> {
 
-	/**
-	 * The name of the course, the number of credits it is worth, and the converted 9-scale grade
-	 */
 	private String name;
 	private int numCredits;
 	private double grade;
@@ -25,11 +23,10 @@ public class Course implements Comparable<Course> {
 	 * in which "EECS 2021" is the course name (capture group 1), and "3" is the number of credits
 	 * (group 2).
 	 *
-	 * Note, the remaining values of the entire default string are otherwise tab-delimted.
-	 *
+	 * @apiNote the remaining values of the entire default string are otherwise tab-delimited.
 	 * @see java.util.regex.Pattern
 	 */
-	public static final Pattern p = Pattern.compile(Course.REGEX);
+	public static final Pattern courseFormat = Pattern.compile(Course.REGEX);
 	private static final String REGEX = "\\w{2} (\\w{3,4} {1,2}\\d{4}) {2}(\\d).00 \\w";
 
 	/**

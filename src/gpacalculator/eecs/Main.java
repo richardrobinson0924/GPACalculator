@@ -15,12 +15,10 @@ public class Main {
         String path = "/Users/richardrobinson/Documents/GPACalculator/test.txt";
         Scanner sc = new Scanner(new File(path));
 
-        Pattern p = Pattern.compile(Course.REGEX);
-
         while (sc.hasNextLine()) {
             String[] s = sc.nextLine().split("\t");
             if (s.length == 4) {
-                Matcher m = p.matcher(s[1]);
+                Matcher m = Course.courseFormat.matcher(s[1]);
                 if (m.find()) {
                     names.add(m.group(1));
                     credits.add(Integer.parseInt(m.group(2)));
