@@ -4,6 +4,7 @@ import java.util.*;
 
 /**
  * Copyright (c) 2018 Richard Robinson. All rights reserved.
+ * @see <a href="https://github.com/richardrobinson0924/GPACalculator">https://github.com/richardrobinson0924/GPACalculator</a>
  */
 public class Course implements Comparable<Course> {
 
