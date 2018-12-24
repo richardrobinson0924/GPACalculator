@@ -1,6 +1,6 @@
 package gpacalculator.eecs;
 
-abstract class Grade <T> implements Comparable<Grade> {
+abstract class Grade<T> implements Comparable<Grade> {
 	private T rawGrade;
 	private static String regex = "";
 

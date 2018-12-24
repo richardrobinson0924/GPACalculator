@@ -2,7 +2,7 @@ package gpacalculator.eecs;
 
 import java.util.regex.*;
 
-public class Course implements Comparable<Course>{
+public class Course implements Comparable<Course> {
 	private String name;
 	private Grade grade;
 	private double credits;
@@ -14,17 +14,17 @@ public class Course implements Comparable<Course>{
 			"(?<name>[^\\t,\\n]*)\\t?" +
 			"(?<grade>\\w\\+?)?";
 
-	public Course(String name, Grade grade, double credits) {
+	private Course(String name, Grade grade, double credits) {
 		this.name = name;
 		this.grade = grade;
 		this.credits = credits;
 	}
 
-	public <T> Course(String name, T grade, double credits) {
+	<T> Course(String name, T grade, double credits) {
 		this(name, new YorkGrade<>(grade), credits);
 	}
 
-	public Course(String rawFormat) throws IllegalArgumentException {
+	Course(String rawFormat) throws IllegalArgumentException {
 		Matcher m = Pattern.compile(REGEX_FORMAT).matcher(rawFormat);
 
 		if (m.find() && m.group("grade") != null) {
@@ -40,11 +40,11 @@ public class Course implements Comparable<Course>{
 		return name;
 	}
 
-	public Grade getGrade() {
+	Grade getGrade() {
 		return grade;
 	}
 
-	public double getCredits() {
+	double getCredits() {
 		return credits;
 	}
 
@@ -60,9 +60,9 @@ public class Course implements Comparable<Course>{
 	@Override
 	public String toString() {
 		return "Course{" +
-				"name='" + name + '\'' +
-				", grade=" + grade +
-				", credits=" + credits +
+				"name='" + getName() + '\'' +
+				", grade=" + getGrade() +
+				", credits=" + getCredits() +
 				'}';
 	}
 
