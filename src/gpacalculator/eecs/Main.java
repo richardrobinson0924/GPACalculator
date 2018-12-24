@@ -8,30 +8,20 @@ import java.util.regex.*;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        List<String> names    = new ArrayList<>();
-        List<String> grades  = new ArrayList<>();
-        List<Integer> credits = new ArrayList<>();
 
         String path = "/Users/richardrobinson/Documents/GPACalculator/test.txt";
         Scanner sc = new Scanner(new File(path));
 
+        List<Course> courses = new ArrayList<>();
+
         while (sc.hasNextLine()) {
-            String[] s = sc.nextLine().split("\t");
-            if (s.length == 4) {
-                Matcher m = Course.courseFormat.matcher(s[1]);
-                if (m.find()) {
-                    names.add(m.group(1));
-                    credits.add(Integer.parseInt(m.group(2)));
-                }
-                grades.add(s[3]);
-            }
+            try {
+                courses.add(new Course(sc.nextLine()));
+            } catch (IllegalArgumentException ignored) {}
         }
 
-        System.out.println(names);
-        System.out.println(grades);
-        System.out.println(credits);
-        List<Course> courses = Course.makeList(names, grades, credits);
-        courses.add(new Course("EECS 2200", 75.0, 3));
+        courses.add(new Course("LE EECS 2200", 75.0, 3.00));
+        Collections.sort(courses);
 
         double sum = 0;
         int totalCredits = 0;
@@ -42,6 +32,6 @@ public class Main {
             totalCredits += c.getNumCredits();
         }
 
-        System.out.println(sum/totalCredits);
+        System.out.printf("\nYour GPA is: %.2f", sum/totalCredits);
     }
 }
