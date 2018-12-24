@@ -1,14 +1,11 @@
 package gpacalculator.eecs;
 
-import java.io.*;;
+import java.io.File;
 import java.util.*;
-import java.util.regex.*;
-
 
 public class Main {
 
     public static void main(String[] args) throws Exception {
-
         String path = "/Users/richardrobinson/Documents/GPACalculator/test.txt";
         Scanner sc = new Scanner(new File(path));
 
@@ -28,10 +25,11 @@ public class Main {
 
         for (Course c : courses) {
             System.out.println(c);
-            sum += c.getGrade() * c.getNumCredits();
-            totalCredits += c.getNumCredits();
+            sum += c.getGrade().normalize() * c.getCredits();
+            totalCredits += c.getCredits();
         }
 
         System.out.printf("\nYour GPA is: %.2f", sum/totalCredits);
+
     }
 }
