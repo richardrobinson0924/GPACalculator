@@ -11,7 +11,7 @@ public class Course implements Comparable<Course> {
 			"(?<code>\\D*\\d{4})\\s*" +
 			"(?<credits>\\d\\.\\d{2})\\s" +
 			"(?<section>\\w)\\t" +
-			"(?<name>[^\\t,\\n]*)\\t?" +
+			"(?<name>[^\\t\\n]*)\\t?" +
 			"(?<grade>\\w\\+?)?";
 
 	private Course(String name, Grade grade, double credits) {
@@ -32,7 +32,7 @@ public class Course implements Comparable<Course> {
 			this.grade = new YorkGrade<>(m.group("grade"));
 			this.credits = Double.parseDouble(m.group("credits"));
 		} else {
-			throw new IllegalArgumentException("Does not match pattern");
+			throw new IllegalArgumentException(rawFormat);
 		}
 	}
 
@@ -54,14 +54,18 @@ public class Course implements Comparable<Course> {
 
 	@Override
 	public int compareTo(Course o) {
-		return this.grade.compareTo(o.grade);
+		int gradeResult = this.grade.compareTo(o.grade);
+
+		return (gradeResult == 0)
+			? this.getName().compareTo(o.getName())
+			: gradeResult;
 	}
 
 	@Override
 	public String toString() {
 		return "Course{" +
 				"name='" + getName() + '\'' +
-				", grade=" + getGrade() +
+				", grade=" + getGrade().normalize() +
 				", credits=" + getCredits() +
 				'}';
 	}

@@ -73,6 +73,6 @@ abstract class Grade<T> implements Comparable<Grade> {
 	 */
 	@Override
 	public String toString() {
-		return "" + normalize();
+		return "" + rawGrade;
 	}
 }

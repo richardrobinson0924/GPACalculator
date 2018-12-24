@@ -51,6 +51,7 @@ class YorkGrade<T> extends Grade<T> {
 
 		if (percent >= 90) return 9;
 		if (percent >= 80) return 8;
+		if (percent >= 75) return 7;
 
 		int base = 75;
 		for (double i = 7; i >= 2; i--) {
