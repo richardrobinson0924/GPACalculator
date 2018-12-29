@@ -7,25 +7,25 @@ public class Course implements Comparable<Course> {
 	private Grade grade;
 	private double credits;
 
-	private static String REGEX_FORMAT = "(?<term>\\w{2}\\d{2})\\t" +
+	private static String REGEX = "(?<term>\\w{2}\\d{2})\\t" +
 			"(?<code>\\D*\\d{4})\\s*" +
 			"(?<credits>\\d\\.\\d{2})\\s" +
 			"(?<section>\\w)\\t" +
 			"(?<name>[^\\t\\n]*)\\t?" +
 			"(?<grade>\\w\\+?)?";
 
-	private Course(String name, Grade grade, double credits) {
+	public Course(String name, Grade grade, double credits) {
 		this.name = name;
 		this.grade = grade;
 		this.credits = credits;
 	}
 
-	<T> Course(String name, T grade, double credits) {
-		this(name, new YorkGrade<>(grade), credits);
+	public <T> Course(String name, T grade, double credits) {
+			this(name, new YorkGrade<>(grade), credits);
 	}
 
-	Course(String rawFormat) throws IllegalArgumentException {
-		Matcher m = Pattern.compile(REGEX_FORMAT).matcher(rawFormat);
+	public Course(String rawFormat) throws IllegalArgumentException {
+		Matcher m = Pattern.compile(REGEX).matcher(rawFormat);
 
 		if (m.find() && m.group("grade") != null) {
 			this.name = m.group("code");
@@ -40,25 +40,25 @@ public class Course implements Comparable<Course> {
 		return name;
 	}
 
-	Grade getGrade() {
+	public Grade getGrade() {
 		return grade;
 	}
 
-	double getCredits() {
+	public double getCredits() {
 		return credits;
 	}
 
-	public static void setRegexFormat(String regexFormat) {
-		Course.REGEX_FORMAT = regexFormat;
+	public static void setRegex(String regex) {
+		Course.REGEX = regex;
 	}
 
 	@Override
-	public int compareTo(Course o) {
-		int gradeResult = this.grade.compareTo(o.grade);
+	public int compareTo(Course c) {
+		int gradeResult = this.grade.compareTo(c.grade);
 
 		return (gradeResult == 0)
-			? this.getName().compareTo(o.getName())
-			: gradeResult;
+				? this.getName().compareTo(c.getName())
+				: gradeResult;
 	}
 
 	@Override

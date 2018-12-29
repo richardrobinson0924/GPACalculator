@@ -5,8 +5,8 @@ import java.util.*;
 
 public class Main {
 
-	public static void main(String[] args) throws Exception {
-		String path = "/Users/richardrobinson/Documents/GPACalculator/test.txt";
+	public static void main(String... args) throws Exception {
+		String path = "test.txt";
 		Scanner sc = new Scanner(new File(path));
 
 		List<Course> courses = new ArrayList<>();
@@ -23,12 +23,12 @@ public class Main {
 		int totalCredits = 0;
 
 		for (Course c : courses) {
-			System.out.println(c + " : " + c.getGrade());
+			//System.out.println(c + " : " + c.getGrade());
 			sum += c.getGrade().normalize() * c.getCredits();
 			totalCredits += c.getCredits();
 		}
 
-		System.out.printf("\nYour GPA is: %.2f", sum / totalCredits);
+		System.out.printf("Your GPA is: %.2f", sum / totalCredits);
 
 	}
 }

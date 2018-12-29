@@ -6,12 +6,12 @@ class YorkGrade<T> extends Grade<T> {
 		Grade.setRegex("[ABCDEF]\\+?");
 	}
 
-	YorkGrade(T rawGrade) {
+	public YorkGrade(T rawGrade) {
 		super(rawGrade);
 	}
 
 	@Override
-	double normalize() {
+	public double normalize() {
 		return (getRawGrade() instanceof String)
 				? YorkGrade.normalize((String) getRawGrade())
 				: YorkGrade.normalize((Number) getRawGrade());
